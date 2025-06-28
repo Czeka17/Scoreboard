@@ -1,55 +1,77 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { StartMatchForm } from '../components/StartMatchForm';
+import { render, screen, fireEvent } from "@testing-library/react";
+import { StartMatchForm } from "../components/forms/StartMatchForm";
 
-describe('StartMatchForm UI', () => {
-  test('renders inputs and button', () => {
-    render(<StartMatchForm onStartMatch={() => {}} />);
-    
-    expect(screen.getByPlaceholderText(/home team/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/away team/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /start match/i })).toBeInTheDocument();
-  });
+describe("StartMatchForm UI", () => {
+	test("renders inputs and button", () => {
+		render(
+			<StartMatchForm
+				onError={() => {}}
+				onStartMatch={() => {}}
+			/>
+		);
 
-  test('disables button if inputs are empty', () => {
-    render(<StartMatchForm onStartMatch={() => {}} />);
-    
-    const button = screen.getByRole('button', { name: /start match/i });
-    expect(button).toBeDisabled();
-  });
+		expect(screen.getByPlaceholderText(/home team/i)).toBeInTheDocument();
+		expect(screen.getByPlaceholderText(/away team/i)).toBeInTheDocument();
+		expect(
+			screen.getByRole("button", { name: /start match/i })
+		).toBeInTheDocument();
+	});
 
-  test('calls onStartMatch with correct data and clears inputs', () => {
-    const mockFn = jest.fn();
-    render(<StartMatchForm onStartMatch={mockFn} />);
-    
-    const homeInput = screen.getByPlaceholderText(/home team/i);
-    const awayInput = screen.getByPlaceholderText(/away team/i);
-    const button = screen.getByRole('button', { name: /start match/i });
+	test("disables button if inputs are empty", () => {
+		render(
+			<StartMatchForm
+				onError={() => {}}
+				onStartMatch={() => {}}
+			/>
+		);
 
-    fireEvent.change(homeInput, { target: { value: 'Team A' } });
-    fireEvent.change(awayInput, { target: { value: 'Team B' } });
+		const button = screen.getByRole("button", { name: /start match/i });
+		expect(button).toBeDisabled();
+	});
 
-    fireEvent.click(button);
+	test("calls onStartMatch with correct data and clears inputs", () => {
+		const mockFn = jest.fn();
+		render(
+			<StartMatchForm
+				onError={() => {}}
+				onStartMatch={mockFn}
+			/>
+		);
 
-    expect(mockFn).toHaveBeenCalledWith('Team A', 'Team B');
-    expect(homeInput).toHaveValue('');
-    expect(awayInput).toHaveValue('');
-  });
+		const homeInput = screen.getByPlaceholderText(/home team/i);
+		const awayInput = screen.getByPlaceholderText(/away team/i);
+		const button = screen.getByRole("button", { name: /start match/i });
 
-  test('does not call onStartMatch when inputs are empty or the same', () => {
-    const mockFn = jest.fn();
-    render(<StartMatchForm onStartMatch={mockFn} />);
-    
-    const homeInput = screen.getByPlaceholderText(/home team/i);
-    const awayInput = screen.getByPlaceholderText(/away team/i);
-    const button = screen.getByRole('button', { name: /start match/i });
+		fireEvent.change(homeInput, { target: { value: "Team A" } });
+		fireEvent.change(awayInput, { target: { value: "Team B" } });
 
-    fireEvent.click(button);
-    expect(mockFn).not.toHaveBeenCalled();
+		fireEvent.click(button);
 
-    fireEvent.change(homeInput, { target: { value: 'Team X' } });
-    fireEvent.change(awayInput, { target: { value: 'Team X' } });
-    fireEvent.click(button);
+		expect(mockFn).toHaveBeenCalledWith("Team A", "Team B");
+		expect(homeInput).toHaveValue("");
+		expect(awayInput).toHaveValue("");
+	});
 
-    expect(mockFn).not.toHaveBeenCalled();
-  });
+	test("does not call onStartMatch when inputs are empty or the same", () => {
+		const mockFn = jest.fn();
+		render(
+			<StartMatchForm
+				onError={() => {}}
+				onStartMatch={mockFn}
+			/>
+		);
+
+		const homeInput = screen.getByPlaceholderText(/home team/i);
+		const awayInput = screen.getByPlaceholderText(/away team/i);
+		const button = screen.getByRole("button", { name: /start match/i });
+
+		fireEvent.click(button);
+		expect(mockFn).not.toHaveBeenCalled();
+
+		fireEvent.change(homeInput, { target: { value: "Team X" } });
+		fireEvent.change(awayInput, { target: { value: "Team X" } });
+		fireEvent.click(button);
+
+		expect(mockFn).not.toHaveBeenCalled();
+	});
 });

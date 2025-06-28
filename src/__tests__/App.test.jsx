@@ -1,12 +1,12 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 
-describe('App', () => {
+describe('LiveFootballScoreboard', () => {
   it('renders StartMatchForm, MatchesSummary, and ActiveMatches', () => {
     render(<App />);
     expect(screen.getByText('Start Match')).toBeInTheDocument();
     expect(screen.getByText('Summary (Ordered by Total Score)')).toBeInTheDocument();
-    expect(screen.getByText(/Active Matches/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: /Active Matches/i })).toBeInTheDocument();
   });
 
   it('shows error alert if trying to start match with same teams', async () => {

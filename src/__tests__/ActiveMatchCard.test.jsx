@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { ActiveMatchCard } from "../components/ActiveMatchCard";
+import { ActiveMatchCard } from "../components/ActiveMatch/ActiveMatchCard";
 
 const mockMatch = {
 	id: "1",
@@ -14,13 +14,16 @@ describe("ActiveMatchCard", () => {
 	it("renders match info correctly", () => {
 		render(
 			<ActiveMatchCard
+				onError={() => {}}
 				match={mockMatch}
 				onUpdateScore={() => {}}
 				onFinishMatch={() => {}}
 			/>
 		);
 
-		expect(screen.getByText("Team A vs Team B")).toBeInTheDocument();
+		expect(screen.getByText("Team A")).toBeInTheDocument();
+		expect(screen.getByText("vs")).toBeInTheDocument();
+		expect(screen.getByText("Team B")).toBeInTheDocument();
 		expect(screen.getByText("2 - 3")).toBeInTheDocument();
 		expect(screen.getByText(/Started:/)).toBeInTheDocument();
 	});
@@ -30,14 +33,15 @@ describe("ActiveMatchCard", () => {
 
 		render(
 			<ActiveMatchCard
+				onError={() => {}}
 				match={mockMatch}
 				onUpdateScore={updateMock}
 				onFinishMatch={() => {}}
 			/>
 		);
 
-		const homeInput = screen.getByLabelText("Team A");
-		const awayInput = screen.getByLabelText("Team B");
+		const homeInput = screen.getByLabelText("Home team");
+		const awayInput = screen.getByLabelText("Away team");
 		const updateButton = screen.getByRole("button", { name: /update score/i });
 
 		fireEvent.change(homeInput, { target: { value: "4" } });
@@ -52,13 +56,14 @@ describe("ActiveMatchCard", () => {
 
 		render(
 			<ActiveMatchCard
+				onError={() => {}}
 				match={mockMatch}
 				onUpdateScore={updateMock}
 				onFinishMatch={() => {}}
 			/>
 		);
 
-		const homeInput = screen.getByLabelText("Team A");
+		const homeInput = screen.getByLabelText("Home team");
 		fireEvent.change(homeInput, { target: { value: "-5" } });
 
 		const updateButton = screen.getByRole("button", { name: /update score/i });
@@ -72,6 +77,7 @@ describe("ActiveMatchCard", () => {
 
 		render(
 			<ActiveMatchCard
+				onError={() => {}}
 				match={mockMatch}
 				onUpdateScore={() => {}}
 				onFinishMatch={finishMock}
