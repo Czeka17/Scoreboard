@@ -1,3 +1,31 @@
+# Introduction
+
+I hosted this project on Vercel:  
+👉 [Live demo](https://scoreboard-taupe-eight.vercel.app)
+
+To run the project locally:
+
+```bash
+npm install       # install dependencies
+npm run test      # run the test suite
+npm run start     # start the development server
+```
+**Tech stack**: React.js, TypeScript  
+**Styling**: TailwindCSS  
+**Tests**: Jest, @testing-library/react
+
+I tried to make it in the simplest and cleanest way
+I started by writing tests first, then i created components and checked if they pass tests, after that i adjusted tests and my components so they will work together perfectly.
+
+## Thanks for reading!
+
+Here’s a cat gif for you — because everyone deserves one after scrolling through code 🐾
+
+![Cat gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExajBodWo4ZzN4ZGI4OHFtNnlwMjZseHBqZmR0OGg4bXk1cGF0bGhwaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13HBDT4QSTpveU/giphy.gif)
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
